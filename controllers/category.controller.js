@@ -84,7 +84,12 @@ exports.findOne = (req, res) => {
 
     Category.findByPk(categoryId)
         .then((category) => {
-            res.status(200).send(categories)
+            if (!category) {
+                res.status(404).send({
+                    message: "Category can not be found",
+                })
+            }
+            res.status(200).send(category)
         })
         .catch((err) => {
             res.status(500).send({
@@ -103,7 +108,11 @@ exports.update = (req, res) => {
         description: req.body.description,
     }
     const categoryId = req.params.id
-    Category.update(category)
+    Category.update(category, {
+        where: {
+            id: categoryId,
+        },
+    })
         .then((updatedcategory) => {
             /**
              * When the updation happens we need to send the row back

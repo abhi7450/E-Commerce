@@ -19,5 +19,5 @@ module.exports = (app) => {
     app.put("/ecom/api/v1/categories/:id", categoryController.update)
 
     //Route for the DELETE request to delete a category based on id
-    app.delete("/ecom/api/v1/categoties/:id", categoryController.delete)
+    app.delete("/ecom/api/v1/categories/:id", categoryController.delete)
 }

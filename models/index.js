@@ -9,19 +9,20 @@
  */
 
 const config = require("../configs/db.config")
-const Sequalize = require("sequelize")
+const Sequelize = require("sequelize")
 
 /**
  * Creating the DB connection
  *  */
-const sequelize = new Sequalize(config.DB, config.USER, config.PASSWORD, {
+const sequelize = new Sequelize(config.DB, config.USER, config.PASSWORD, {
     host: config.HOST,
     dialect: config.dialect,
 })
 
 const db = {}
-db.Sequalize = Sequalize
+db.Sequelize = Sequelize
 db.sequelize = sequelize
-db.category = require("./category.model")(sequelize, Sequalize)
+db.category = require("./category.model")(sequelize, Sequelize)
+db.product = require("./product.model")(sequelize, Sequelize)
 
 module.exports = db
