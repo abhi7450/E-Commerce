@@ -18,14 +18,15 @@ app.use(bodyParser.json())
  */
 
 const db = require("./models")
-const { init } = require("express/lib/application")
 const category = db.category
+const product = db.product
 
 db.sequelize.sync({ force: true }).then(() => {
     console.log("table was dropped and created")
     init()
 })
-function inti() {
+
+function init() {
     var categoties = [
         {
             name: "Electronics",
@@ -37,15 +38,34 @@ function inti() {
             description: "This category will contain all the kitchen products",
         },
     ]
+    var products = [
+        {
+            name: "Nike Shoe",
+            description: "Brand new nike shoe",
+            cost: "10000",
+        },
+        {
+            name: "Cutlery",
+            description: "8 Cutlery Items",
+            cost: "2500",
+        },
+    ]
     category
         .bulkCreate(categoties)
         .then(() => console.log("Category table initialised"))
         .catch((err) => {
             console.log("Error while initialising the category table")
         })
+    product
+        .bulkCreate(products)
+        .then(() => console.log("Product table initialised"))
+        .catch((err) =>
+            console.log("Error while initialising the product table")
+        )
 }
 
 require("./routes/category.routes")(app)
+require("./routes/product.routes")(app)
 
 app.listen(serverConfig.PORT, () => {
     console.log(`Listning on port ${serverConfig.PORT}`)
