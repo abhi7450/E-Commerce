@@ -21,6 +21,8 @@ const db = require("./models")
 const category = db.category
 const product = db.product
 
+category.hasMany(product) // THis will create a foreign key column(categoryId) in product table.
+
 db.sequelize.sync({ force: true }).then(() => {
     console.log("table was dropped and created")
     init()

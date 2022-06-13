@@ -5,6 +5,7 @@ exports.create = (req, res) => {
     /**
      * Validating for the body
      */
+
     if (!req.body.name) {
         res.status(400).send({
             message: "Name of the product can't be empty!!",
@@ -17,10 +18,13 @@ exports.create = (req, res) => {
         })
         return
     }
+    console.log("---------------------------------")
+    console.log(req.body)
     const product = {
         name: req.body.name,
         description: req.body.description,
         cost: req.body.cost,
+        categoryId: req.body.categoryId,
     }
     Product.create(product)
         .then((product) => {
