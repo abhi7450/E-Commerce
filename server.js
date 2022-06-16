@@ -10,6 +10,7 @@ const app = express()
  * Used for parsing the request
  * Parsing the request of the type json and convert that to object
  */
+
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 

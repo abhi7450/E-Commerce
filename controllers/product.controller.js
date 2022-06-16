@@ -2,24 +2,6 @@ const db = require("../models")
 const Product = db.product
 
 exports.create = (req, res) => {
-    /**
-     * Validating for the body
-     */
-
-    if (!req.body.name) {
-        res.status(400).send({
-            message: "Name of the product can't be empty!!",
-        })
-        return
-    }
-    if (!req.body.cost) {
-        res.status(400).send({
-            message: "Cost can't be kept empty !",
-        })
-        return
-    }
-    console.log("---------------------------------")
-    console.log(req.body)
     const product = {
         name: req.body.name,
         description: req.body.description,
@@ -39,13 +21,41 @@ exports.create = (req, res) => {
         })
 }
 // To get all the product list from the db
+//ecom/ecom/api/v1/products?name=phone&minCost=1000&maxCost=20000
 exports.findAll = (req, res) => {
     let { name: productName } = req.query
+    let minCost = req.query.minCost
+    let maxCost = req.query.maxCost
     let promise
     if (productName) {
         promise = Product.findAll({
             where: {
                 name: productName,
+            },
+        })
+    } else if (minCost && maxCost) {
+        promise = Product.findAll({
+            where: {
+                cost: {
+                    [Op.gte]: minCost,
+                    [Op.lte]: maxCost,
+                },
+            },
+        })
+    } else if (minCost) {
+        promise.findAll({
+            where: {
+                cost: {
+                    [Op.gte]: minCost,
+                },
+            },
+        })
+    } else if (maxCost) {
+        promise.findAll({
+            where: {
+                cost: {
+                    [Op.lte]: maxCost,
+                },
             },
         })
     } else {

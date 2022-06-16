@@ -13,16 +13,6 @@ const Category = db.category
  */
 exports.create = (req, res) => {
     /**
-     * Validation of request data
-     */
-    if (!req.body.name) {
-        res.status(400).send({
-            message: "Name of the category can't be empty!!",
-        })
-        return
-    }
-
-    /**
      * Creation of the category object to be stored in the DB
      */
     const category = {
