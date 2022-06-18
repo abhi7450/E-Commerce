@@ -8,8 +8,8 @@
  * name.
  */
 
-const config = require("../configs/db.config")
-const Sequelize = require("sequelize")
+const config = require("../configs/db.config");
+const Sequelize = require("sequelize");
 
 /**
  * Creating the DB connection
@@ -17,12 +17,28 @@ const Sequelize = require("sequelize")
 const sequelize = new Sequelize(config.DB, config.USER, config.PASSWORD, {
     host: config.HOST,
     dialect: config.dialect,
-})
+});
 
-const db = {}
-db.Sequelize = Sequelize
-db.sequelize = sequelize
-db.category = require("./category.model")(sequelize, Sequelize)
-db.product = require("./product.model")(sequelize, Sequelize)
+const db = {};
+db.Sequelize = Sequelize;
+db.sequelize = sequelize;
+db.category = require("./category.model")(sequelize, Sequelize);
+db.product = require("./product.model")(sequelize, Sequelize);
+db.user = require("./user.model")(sequelize, Sequelize);
+db.role = require("./role.model")(sequelize, Sequelize);
 
-module.exports = db
+/**
+ * Establish the relationship between the role and the user
+ */
+
+db.role.belongsToMany(db.user, {
+    through: "user_roles",
+    foreignKey: "roleId",
+});
+
+db.user.belongsToMany(db.role, {
+    through: "user_roles",
+    foreignKey: "userId",
+});
+
+module.exports = db;
