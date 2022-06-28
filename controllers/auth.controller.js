@@ -27,13 +27,15 @@ exports.signup = (req, res) => {
                     },
                 }).then((roles) => {
                     //trying to populate the user role tables.
+
+                    console.log(roles);
                     user.setRoles(roles).then(() => {
                         res.status(200).send({ message: "User Registered Successfully !" });
                     });
                 });
             } else {
                 user.setRoles([1]).then(() => {
-                    res.send({ message: "User registered successfully !" });
+                    res.send({ message: "User registered successfully(default) !" });
                 });
             }
         })

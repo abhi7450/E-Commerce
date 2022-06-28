@@ -1,3 +1,7 @@
+/**
+ * checkDuplicateUsernameOrEmail => check for duplicate email or username
+ * checkRolesExisted => check if role exist or not
+ */
 const { role } = require("../models");
 const db = require("../models");
 
